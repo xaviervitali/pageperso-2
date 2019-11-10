@@ -12,7 +12,7 @@
                 controls
                 indicators
                 background="#ababab"
-
+                img-height="480"
                 style="text-shadow: 1px 1px 2px #333; width:80%;margin:auto; background-color:grey; margin-bottom:1rem;"
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd"

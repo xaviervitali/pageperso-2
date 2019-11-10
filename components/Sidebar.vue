@@ -53,8 +53,10 @@ h4, h2{
 
 .fixed-top {
   opacity: .9;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   background: linear-gradient(to bottom, #2fa9bc 33%,#f9f9f9 99%);
+  padding: 1rem;
+
   
 }
 
