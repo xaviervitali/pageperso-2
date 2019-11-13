@@ -1,7 +1,8 @@
 import { log } from "util";
+import { notStrictEqual } from "assert";
 
 export const state = () => ({
-
+  skills: {
     skillsWeb: [
       { title: "HTML5", note: 6, logo: require("~/assets/img/html5.jpg") },
       { title: "Angular", note: 3, logo: require("~/assets/img/angular.png") },
@@ -71,68 +72,52 @@ export const state = () => ({
       }
     ]
   }
-  
+}
+
 );
 
 export const mutations = {};
 
 export const getters = {
-  
+
   sortSkillsByName: state => {
-    
-   let names = [];
-    let skillsSorted = [];
-    state.skillsForm.forEach(element => {
-      names.push(element.title);
-    });
-    names.sort();
-    names.forEach(name =>
-      skillsSorted.push(state.skillsForm.find(skill => skill.title === name))
-    );
-    return skillsSorted;
+    let allSkills = []
+    Object.keys(state.skills).forEach(currentSkills => {
+      let skillsSorted = [];
+      let names = [];
 
+      state.skills[currentSkills].forEach(skill => names.push(skill.title))
+      names.sort()
 
+      names.forEach(name =>
+        skillsSorted.push(state.skills[currentSkills].find(skill => skill.title === name))
+      );
+
+      allSkills[currentSkills] = skillsSorted
+    }
+    )
+    return allSkills
   },
-  // sortSkillsFormByName: state => {
-  //   let names = [];
-  //   let skillsSorted = [];
-  //   state.skillsForm.forEach(element => {
-  //     names.push(element.title);
-  //   });
-  //   names.sort();
-  //   names.forEach(name =>
-  //     skillsSorted.push(state.skillsForm.find(skill => skill.title === name))
-  //   );
-  //   return skillsSorted;
-  // },
-  // sortSkillsOthersByName: state => {
-  //   let names = [];
-  //   let skillsSorted = [];
-  //   state.skillsOthers.forEach(element => {
-  //     names.push(element.title);
-  //   });
-  //   names.sort();
-  //   names.forEach(name =>
-  //     skillsSorted.push(state.skillsOthers.find(skill => skill.title === name))
-  //   );
-  //   return skillsSorted;
-  // },
-  sortSkillsByScore: state => skills => {
-    let scores = [];
-    let scoresSorted = [];
-    state[skills].forEach(element => {
-      !scores.find(note => note === element.note)
-        ? scores.push(element.note)
-        : "";
-    });
-    scores.sort().reverse();
 
-    scores.forEach(score =>
-      scoresSorted.push(state[skills].filter(skill => skill.note === score))
-    );
-
-    return scoresSorted.flat();
-  }
-};
-
+  sortSkillsByScore: state => {
+    let allScores = [];
+    Object.keys(state.skills).forEach(currentSkills => {
+      let scores = []
+      let scoresSorted = [];
+      state.skills[currentSkills].forEach(skill =>
+        scores.findIndex(note => note === skill.note) === -1 ? scores.push(skill.note) : "")
+      scores.sort().reverse()
+      
+   
+      
+      
+      scores.forEach(score=> scoresSorted.push(state.skills[currentSkills].filter(skill =>score === skill.note )))
+      allScores[currentSkills]=scoresSorted.flat()
+    }
+    )
+    console.log(allScores)
+ 
+  return allScores
+}
+}
 

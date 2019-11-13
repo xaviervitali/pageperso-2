@@ -1,60 +1,140 @@
 <template>
   <div id="form">
     <h4>Mes Compétences en Formation pour Adultes</h4>
-      <div v-if="selected==='names'">
-    <div class="d-flex flex-wrap justify-content-around">
-        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsFormByName']" :key="id">
-          <progress-bar
-            dashCount=60
-            :activeCount="skill.note*6"
-            :text="skill.title[0].toUpperCase()+skill.title.slice(1).toLowerCase()"
-            activeWidth=30
-            :size="size"
-          ></progress-bar>
+    <client-only placeholder="Loading...">
+      <div
+        v-if="selected==='names'"
+        class="d-flex flex-row justify-content-around align-items-center align-content-center flex-wrap"
+      >
+        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsForm" :key="id">
+          <p>{{capitalize(skill.title)}}</p>
+
+          <apexcharts
+            type="radialBar"
+            height="300"
+            :options="chartOptions"
+            :series="[skill.note*10]"
+          />
         </div>
       </div>
-    </div>
+      <div v-else 
+        class="d-flex flex-row justify-content-around align-items-center align-content-center flex-wrap"
+      >
+        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByScore'].skillsForm" :key="id">
+          <p>{{capitalize(skill.title)}}</p>
+          <apexcharts
+            type="radialBar"
+            height="300"
+            :options="chartOptions"
+            :series="[skill.note*10]"
+          />
+        </div>
+      </div>
+    </client-only>
   </div>
 </template>
 
   <script>
-import ProgressBar from "vue-circle-counter";
 export default {
   components: {
-    ProgressBar
+    Apexcharts: () => import("vue-apexcharts")
   },
   props: {
     selected: { type: String, required: true }
   },
-  data() {
+  data: function() {
     return {
-      size: 0
+      chartOptions: {
+        chart: {
+          height: 280,
+          type: "radialBar"
+        },
+
+        series: [67],
+        colors: ["#20E647"],
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              margin: 0,
+              size: "70%",
+              background: "#293450"
+            },
+            track: {
+              dropShadow: {
+                enabled: true,
+                top: 2,
+                left: 0,
+                blur: 4,
+                opacity: 0.15
+              }
+            },
+            dataLabels: {
+              name: {
+                offsetY: -10,
+                color: "#fff",
+                fontSize: "1.5rem",
+                show: false
+              },
+              value: {
+                color: "#fff",
+                fontSize: "2rem",
+                show: true
+              }
+            }
+          }
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shade: "dark",
+            type: "vertical",
+            gradientToColors: ["#87D4F9"],
+            stops: [0, 100]
+          }
+        },
+        stroke: {
+          lineCap: "round"
+        }
+      }
     };
   },
-  mounted() {
-    this.size = window.innerWidth / 10;
+  methods: {
+    capitalize(title) {
+      let newStr = "";
+
+      title = title.split(" ");
+
+      title.forEach(word => {
+        newStr += word[0].toUpperCase() + word.slice(1).toLowerCase() + " ";
+      });
+      console.log(newStr);
+      return newStr;
+    }
   }
 };
 </script>
 
   <style >
-svg {
-  margin: 1.1rem;
-}
 p {
-  font-size: 0.8rem;
+  color: white !important;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 99;
+  text-shadow: 0 0 1px black;
+  margin: 0;
 }
+ 
 #form {
   background-image: linear-gradient(
       rgba(0, 0, 0, 0.5),
-      rgba(255, 255, 255, 0.5)
+      rgba(255, 255, 255, 0.2)
     ),
     url("../assets/img/formBackground.jpg");
   background-repeat: no-repeat;
 
   background-size: cover;
   background-position-y: center;
-  padding: 1rem;
-  margin: 0 0 2rem 0;
+  padding: 2rem 1rem 4rem 1rem;
+  margin: 0 0 2rem 0;  
 }
 </style>

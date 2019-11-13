@@ -1,24 +1,43 @@
  <template>
-  <div>
-    <sidebar />
+  <div> 
+  <sidebar />
 
-    <div
-    class="position-fixed"
-      style="top:9rem!important;padding:.5rem; width:10rem;background-color:#F9F9FA;"
-    >
-      
-  <div>
-    <b-form-group label="Trier les Compétences par">
-      <b-form-radio v-model="selected" name="some-radios" value="names">Noms</b-form-radio>
-      <b-form-radio v-model="selected" name="some-radios" value="values">Valeurs decroissantes</b-form-radio>
-    </b-form-group>
-
+    <div class="position-fixed d-flex justify-content-around align-items-center flex-wrap">
     
-  </div>
+        <b-form-group label="Trier les Compétences par" class="sort">
+          <b-form-radio v-model="selected"  value="names">Noms</b-form-radio>
+          <b-form-radio v-model="selected"  value="values">Valeurs decroissantes</b-form-radio>
+        </b-form-group>
+     
+      <b-form-group
+        id="input-group-1"
+        label="Chercher directement une compétence"
+        label-for="input-1"       
+      >
+<div class="d-flex justify-content-between align-item-center">
+  <div  class="col-9">
+  <p>Nom</p> 
+        <b-form-input
+          id="input-1"
+          type="text"
+          placeholder="ex. VueJS"
+         
+        ></b-form-input>
+        </div>
+        <div class="col-3">
+<p>Taux</p>
+<p>-  %</p>
+</div>
+
+        </div>
+      </b-form-group>
+
+    </div> 
+    <div class="skillsList">
+      <skillsWeb :selected="this.selected" />
+       <skillsForm :selected="this.selected" :size="size" />
+    <skillsOther :selected="this.selected" :size="size"/> 
     </div>
-    <skillsWeb :selected="this.selected" style="margin-left:11rem" />
-    <skillsForm :selected="this.selected" style="margin-left:11rem" />
-    <skillsOther :selected="this.selected" style="margin-left:11rem"  />
   </div>
 </template>
 
@@ -32,37 +51,50 @@ export default {
     skillsWeb,
     sidebar,
     skillsForm,
-    skillsOther,
-
+    skillsOther
   },
   data() {
     return {
-      size: 1,
+      size: "1",
       activeWidth: 0,
-      selected:'names'
+      selected: "names"
     };
   },
-  created() {
-   
-   
+  mounted() {
+    this.size = window.innerWidth/6
   }
 };
 </script>
 
-<style scoped>
-
-
-*[data-v-4fe340fb]  {
- 
-margin-top: 1.2rem ;
-
+<style>
+div p{
+  font-size: 1rem;
+  color: black;
+  text-align: center;
 }
-*{
+*[data-v-4fe340fb] {
+
+  padding: auto;
+}
+
+.form-control{
+  margin: 0;
+}
+* {
   color: black;
 }
 form {
   text-align: center;
 }
-
-
+.skillsList {
+  margin-top: 11.5rem;
+}
+.position-fixed  {
+  top: 6.9rem !important;
+  width: 100%;
+  background-color: #f9f9fa;
+  padding:.5rem ;
+z-index: 2;
+opacity: .9;
+}
 </style>

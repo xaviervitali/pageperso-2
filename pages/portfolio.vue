@@ -13,7 +13,7 @@
                 indicators
                 background="#ababab"
                 img-height="480"
-                style="text-shadow: 1px 1px 2px #333; width:80%;margin:auto; background-color:grey; margin-bottom:1rem;"
+                style="text-shadow: 1px 1px 2px #333; width:80%;margin:auto;margin-bottom:1rem;"
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd"
                 >   
@@ -130,6 +130,10 @@ data(){
 .img-fluid, .pitch {
     max-height: 480px;
     object-fit: cover;
+    border:2px solid black;
+    padding:1rem;
+background:linear-gradient(to bottom, #000000 0%,#44b2c3 35%,#44b2c3 35%,#44b2c3 52%);
+background: -moz-linear-gradient(top, #000000 0%, #44b2c3 31%, #44b2c3 31%, #44b2c3 52%, #44b2c3 71%, #000000 100%); 
     /* filter: brightness(40%); */
 
 }
