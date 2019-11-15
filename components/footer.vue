@@ -7,13 +7,16 @@
       <article>
         <!-- <p>Linkedin</p> -->
       <p  v-b-tooltip.hover.top="'Linkedin'">
+        <a href="https://github.com/xaviervitali/home">
           <i  class="fab fa-linkedin-in"></i>
+          </a>
         </p>
       </article>
       <article>
-        <!-- <p>Github</p> -->
         <p v-b-tooltip.hover.top="'Github'">
+      <a href="http://www.linkedin.com/in/xavier-vitali">
           <i class="fab fa-github"></i>
+          </a>
         </p>
       </article>
     </section>
