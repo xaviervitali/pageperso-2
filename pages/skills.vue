@@ -1,43 +1,45 @@
  <template>
-  <div> 
-  <sidebar />
-
-    <div class="position-fixed d-flex justify-content-around align-items-center flex-wrap">
-    
-        <b-form-group label="Trier les Compétences par" class="sort">
-          <b-form-radio v-model="selected"  value="names">Noms</b-form-radio>
-          <b-form-radio v-model="selected"  value="values">Valeurs decroissantes</b-form-radio>
+  <div>
+    <sidebar />
+    <div>
+      <div class="sidebar">
+        <b-form-group label="Trier les Compétences par" class="sort" style="margin-bottom:3rem;">
+          <b-form-radio v-model="selected" value="names">Noms</b-form-radio>
+          <b-form-radio v-model="selected" value="values">Valeurs decroissantes</b-form-radio>
         </b-form-group>
-     
-      <b-form-group
-        id="input-group-1"
-        label="Chercher directement une compétence"
-        label-for="input-1"       
-      >
-<div class="d-flex justify-content-between align-item-center">
-  <div  class="col-9">
-  <p>Nom</p> 
-        <b-form-input
-          id="input-1"
-          type="text"
-          placeholder="ex. VueJS"
-         
-        ></b-form-input>
-        </div>
-        <div class="col-3">
-<p>Taux</p>
-<p>-  %</p>
-</div>
-
-        </div>
-      </b-form-group>
-
-    </div> 
-    <div class="skillsList">
-      <skillsWeb :selected="this.selected" />
-       <skillsForm :selected="this.selected" :size="size" />
-    <skillsOther :selected="this.selected" :size="size"/> 
+        <b-form-group label="Chercher une competence" id="input-group-1" label-for="input-1">
+          <div class="query">
+            <div>
+              <p>Nom</p>
+              <no-ssr>
+                <vue-bootstrap-typeahead
+                  :data="$store.getters['skills/allSkillsTitle']"
+                  v-model="skillSearch"
+                  @hit="getNote()"
+                />
+              </no-ssr>
+            </div>
+            <p>Taux</p>
+            <div class="d-flex justify-content-center align-items-center ">
+              <img :src="img" alt />
+              <p style="font-size:2.5rem">{{note}} %</p>
+            </div>
+          </div>
+        </b-form-group>
+      </div>
     </div>
+    <div class="skillsList">
+      <h2>Mes Compétences Web</h2>
+
+      <skillsWeb :selected="this.selected" class="skills" />
+      <h2>Mes Compétences en Formation pour Adultes</h2>
+
+      <skillsForm :selected="this.selected" class="skills" />
+      <h2>Mes Autres Compétences</h2>
+
+      <skillsOther :selected="this.selected" class="skills" />
+    </div>
+    <foot />
   </div>
 </template>
 
@@ -46,55 +48,106 @@ import skillsWeb from "~/components/SkillsWeb.vue";
 import skillsForm from "~/components/SkillsForm.vue";
 import skillsOther from "~/components/SkillsOther.vue";
 import sidebar from "~/components/Sidebar.vue";
+import foot from "~/components/footer.vue";
+// import Vue from 'vue'
+// import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
+
 export default {
   components: {
     skillsWeb,
     sidebar,
     skillsForm,
-    skillsOther
+    skillsOther,
+    VueBootstrapTypeahead: () => import("vue-bootstrap-typeahead"),
+    foot
+    // VueBootstrapTypeahead
   },
   data() {
     return {
       size: "1",
       activeWidth: 0,
-      selected: "names"
+      selected: "names",
+      skillSearch: "",
+      note: "-",
+      img: ""
     };
   },
   mounted() {
-    this.size = window.innerWidth/6
+    this.size = window.innerWidth / 6;
+  },
+  methods: {
+    getNote() {
+      this.note =
+        this.$store.getters["skills/allSkills"][this.skillSearch].note * 10;
+      this.img = this.$store.getters["skills/allSkills"][this.skillSearch].logo;
+    }
+  },
+  watch: {
+    skillSearch: function() {
+      if (!this.$store.getters["skills/allSkills"][this.skillSearch]) {
+        this.img = "";
+        this.note = "-";
+      }
+    }
   }
 };
 </script>
 
 <style>
-div p{
+
+.skills {
+  width: 80%;
+  right: 0;
+}
+.query p {
   font-size: 1rem;
-  color: black;
   text-align: center;
+  color: #000;
 }
 *[data-v-4fe340fb] {
-
   padding: auto;
 }
-
-.form-control{
+.col-form-label, label{
+  text-align: center;
+  margin: .5rem;
+}
+.form-control {
   margin: 0;
 }
-* {
+h2 {
+   margin: 0;
   color: black;
+  font-size: 2.5rem;
+  width: 80%;;
 }
+
 form {
   text-align: center;
 }
-.skillsList {
-  margin-top: 11.5rem;
+
+.sidebar {
+  width: 20%;
+  min-width: 12rem;
+  position: fixed;
+  background-color: white;
+  height: 100%;
+  padding: 1rem;
+  right: 0;
 }
-.position-fixed  {
-  top: 6.9rem !important;
-  width: 100%;
-  background-color: #f9f9fa;
-  padding:.5rem ;
-z-index: 2;
-opacity: .9;
+
+img {
+  height: 4rem;
+  max-width: 11rem;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 991px) {
+  .sidebar { 
+    display:none;
+  }
+  .skills, h2{
+    width:100%;
+  }
+
 }
 </style>

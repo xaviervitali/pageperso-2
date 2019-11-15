@@ -40,7 +40,8 @@ export const state = () => ({
       },
       { title: "nuxtJS", note: 2, logo: require("~/assets/img/nuxt.png") },
       { title: "nodeJS", note: 2, logo: require("~/assets/img/nodeJs.png") },
-      { title: "yarn", note: 3, logo: require("~/assets/img/yarn.png") }
+      { title: "yarn", note: 3, logo: require("~/assets/img/yarn.png") },
+      { title: "mySql", note: 3, logo: require("~/assets/img/sql.png") }
     ],
     skillsOthers: [
       { title: "VBA Office", note: 6 },
@@ -107,17 +108,34 @@ export const getters = {
       state.skills[currentSkills].forEach(skill =>
         scores.findIndex(note => note === skill.note) === -1 ? scores.push(skill.note) : "")
       scores.sort().reverse()
-      
-   
-      
-      
-      scores.forEach(score=> scoresSorted.push(state.skills[currentSkills].filter(skill =>score === skill.note )))
-      allScores[currentSkills]=scoresSorted.flat()
+
+      scores.forEach(score => scoresSorted.push(state.skills[currentSkills].filter(skill => score === skill.note)))
+      allScores[currentSkills] = scoresSorted.flat()
     }
     )
-    console.log(allScores)
- 
-  return allScores
-}
+
+    return allScores
+  },
+  allSkillsTitle: state => {
+    let allSkills = [];
+    Object.keys(state.skills).forEach(currentSkills => {
+      state.skills[currentSkills].forEach(skill => {
+        allSkills.push(skill.title)
+      }
+      )
+    })
+    return allSkills
+  },
+  allSkills: state => {
+    let allSkills = {};
+    Object.keys(state.skills).forEach(currentSkills => {
+      state.skills[currentSkills].forEach(skill => {
+        allSkills[skill.title] = { note: skill.note, logo: skill.logo }
+      }
+      )
+    })
+    return allSkills
+  },
+
 }
 

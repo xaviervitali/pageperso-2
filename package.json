@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.0.0",
     "nuxt": "^2.0.0",
     "vue-apexcharts": "^1.5.1",
+    "vue-bootstrap-typeahead": "^0.2.6",
     "vue-circle-counter": "^3.0.0",
     "vue-radial-progress": "^0.2.10"
   },

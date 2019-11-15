@@ -1,6 +1,5 @@
 <template>
   <div id="web">
-    <h4>Mes Compétences Web</h4>
 
     <client-only placeholder="Loading..."  >
         <span v-if="selected==='names'"  class="d-flex flex-row justify-content-center align-items-center flex-wrap primary ">
@@ -107,24 +106,17 @@ export default {
 </script>
 
   <style >
-h4{
-  color: white;
-}
+
 
 #web {
-  background-image: linear-gradient(
-      rgba(0, 0, 0, 0.5),
-      rgba(255, 255, 255, 0.9)
-    ),
+background: 
     url("../assets/img/webBackground.jpg");
   background-repeat: no-repeat;
   font-size: 1.4rem;
   background-size: cover;
   background-position-y: center;
-  padding: 1rem 0rem 5rem 1rem;
-  margin: 0 0 2rem 0;
+  padding: 1rem;
+  margin: 2rem 0;
 }
-h4 {
-  font-size: 2rem;
-}
+
 </style>

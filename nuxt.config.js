@@ -15,15 +15,14 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
+  /*v
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
   /*
   ** Global CSS
   */
-  css: [
-  ],
+ css: [],
   /*
   ** Plugins to load before mounting the App
   */

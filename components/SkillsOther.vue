@@ -1,6 +1,5 @@
 <template>
   <div id="other">
-    <h4>Mes Autres Compétences</h4>
     <client-only placeholder="Loading...">
       <div
         v-if="selected==='names'"
@@ -107,7 +106,6 @@ export default {
       title.forEach(word => {
         newStr += word[0].toUpperCase() + word.slice(1).toLowerCase() + " ";
       });
-      console.log(newStr);
       return newStr;
     }
   }
@@ -134,7 +132,7 @@ p {
 
   background-size: cover;
   background-position-y: center;
-  padding: 2rem 1rem 4rem 1rem;
-  margin: 0 0 2rem 0;  
+  padding:  1rem ;
+  margin:2rem 0;  
 }
 </style>

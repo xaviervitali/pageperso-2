@@ -1,6 +1,5 @@
 <template>
   <div id="form">
-    <h4>Mes Compétences en Formation pour Adultes</h4>
     <client-only placeholder="Loading...">
       <div
         v-if="selected==='names'"
@@ -107,16 +106,16 @@ export default {
       title.forEach(word => {
         newStr += word[0].toUpperCase() + word.slice(1).toLowerCase() + " ";
       });
-      console.log(newStr);
       return newStr;
     }
   }
 };
 </script>
 
-  <style >
+  <style>
+
 p {
-  color: white !important;
+  color: white;
   font-size: 1.5rem;
   text-align: center;
   z-index: 99;
@@ -134,7 +133,7 @@ p {
 
   background-size: cover;
   background-position-y: center;
-  padding: 2rem 1rem 4rem 1rem;
-  margin: 0 0 2rem 0;  
+  padding: 1rem;
+  margin:  2rem 0;  
 }
 </style>

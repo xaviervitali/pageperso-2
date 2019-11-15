@@ -21,7 +21,7 @@ Xavier Vitali
         <!-- <b-nav-item href="/">A propos</b-nav-item> -->
         <b-nav-item href="skills">Compétences</b-nav-item>
         <b-nav-item href="portfolio">Portofolio</b-nav-item>
-        <b-nav-item href="#">Contact</b-nav-item>
+        <b-nav-item href="#"  v-b-tooltip.hover.top="'En cours de realisation'" disabled>Contact</b-nav-item>
 
       </b-navbar-nav>
 
@@ -56,6 +56,7 @@ h4, h2{
   margin-bottom: 4rem;
   background: linear-gradient(to bottom, #2fa9bc 33%,#f9f9f9 99%);
   padding: 1rem;
+  width: 100%;    
 
   
 }
