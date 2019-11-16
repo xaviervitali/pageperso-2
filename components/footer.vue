@@ -39,10 +39,10 @@ section {
   display: flex;
   justify-content: space-around;
   font-size: 1.2rem;
-  opacity: .9;
+  /* opacity: .9; */
   margin-top: 5rem;
 }
 
-article:hover{
-color:#C6E3E8}
+i{
+color:white}
 </style>

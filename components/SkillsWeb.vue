@@ -2,24 +2,30 @@
   <div id="web">
 
     <client-only placeholder="Loading..."  >
-        <span v-if="selected==='names'"  class="d-flex flex-row justify-content-center align-items-center flex-wrap primary ">
-            <apexcharts v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsWeb" :key="id"
+        <span v-if="selected==='names'"  class="d-flex flex-row justify-content-center align-items-center flex-wrap  ">
+          <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsWeb" :key="id">
+            <apexcharts 
+            v-if="skill.note>=noteMin"
               type="radialBar"
               height="300"
               :options="updateLabel(skill.title)"
            
               :series="[skill.note*10]"
             />
+            </div>
       </span>
-      <div v-else class="d-flex flex-row justify-content-center align-items-center flex-wrap primary " >
-            <apexcharts v-for="(skill,id) in  $store.getters['skills/sortSkillsByScore'].skillsWeb" :key="id" 
+      <div v-else class="d-flex flex-row justify-content-center align-items-center flex-wrap  " >
+        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByScore'].skillsWeb" :key="id" >
+            <apexcharts  
+            v-if="skill.note>=noteMin"
+
               type="radialBar"
               height="300"
               :options="updateLabel(skill.title)"
               :labels="skill.title"
               :series="[skill.note*10]"
             />
-
+</div>
       </div>
     </client-only>
   </div>
@@ -33,9 +39,12 @@ export default {
   },
   props: {
         selected: { type: String, required: true },
+        noteMin: { type: Number, required: true },
   },
   data: function() {
-    return {};
+    return {
+      
+    };
   },
   methods: {
     updateLabel(title) {
@@ -110,13 +119,16 @@ export default {
 
 #web {
 background: 
-    url("../assets/img/webBackground.jpg");
+    url("../assets/img/webBackground2.jpg");
   background-repeat: no-repeat;
   font-size: 1.4rem;
   background-size: cover;
-  background-position-y: center;
+   background-attachment: fixed;
+
+
   padding: 1rem;
   margin: 2rem 0;
 }
+
 
 </style>

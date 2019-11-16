@@ -17,7 +17,7 @@
         @sliding-start="onSlideStart"
         @sliding-end="onSlideEnd"
       >
-        <div v-for="id in portofolio" :key="id">
+        <div v-for="id in portofolio" :key="id" class="carroussel">
           <a :href="id.workUrl" target="_blank">
             <b-carousel-slide
               v-model="slide"
@@ -116,12 +116,11 @@ export default {
 
 <style>
 .img-fluid,
-.pitch {
+.pitch  {
   max-height: 400px;
   object-fit: cover;
-  border: 2px solid black;
-  padding: 1rem;
-  background: linear-gradient(
+  /* padding: 1rem; */
+  /* background: linear-gradient(
     to bottom,
     #000000 0%,
     #44b2c3 35%,
@@ -135,12 +134,35 @@ export default {
     #44b2c3 31%,
     #44b2c3 52%,
     #44b2c3 71%,
-    #000000 100%
-  );
+    #000000 100% */
+  /* ); */
   /* filter: brightness(40%); */
 }
-.carousel-caption {
-  background-color: rgba(139, 181, 230, 0.8);
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  background-color: rgba(0 , 0, 0, 0.5);
+  padding: 2rem;
   border-radius: 2rem;
 }
+
+.carousel-caption{
+  background-color: rgba(0 , 0, 0, 0.2);
+  border-radius: 3rem;
+
+}
+.carousel-caption:hover{
+  background-color: rgba(0 , 0, 0, 0.6);
+
+}
+
+.carousel-inner{
+  border: 2px solid black;
+
+  overflow: hidden;
+
+}
+ .carousel-control-next-icon {
+   overflow: hidden;
+  border: 2px 0 solid black;
+
+ }
 </style>

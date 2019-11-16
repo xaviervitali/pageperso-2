@@ -1,32 +1,38 @@
 <template>
-  <div id="other">
+  <div id="others">
     <client-only placeholder="Loading...">
       <div
         v-if="selected==='names'"
-        class="d-flex flex-row justify-content-around align-items-center align-content-center flex-wrap"
-      >
-        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsOthers" :key="id">
-          <p>{{capitalize(skill.title)}}</p>
+        class="d-flex flex-row  justify-content-center flex-wrap"
 
-          <apexcharts
-            type="radialBar"
-            height="300"
-            :options="chartOptions"
-            :series="[skill.note*10]"
-          />
+      >
+        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsOthers" :key="id" class="skillOthers">
+          <div v-if="skill.note>=noteMin">
+            <p  v-b-tooltip.hover.top="skill.tooltip">{{capitalize(skill.title)}}</p>
+
+            <apexcharts
+              type="radialBar"
+              height="300"
+              :options="chartOptions"
+              :series="[skill.note*10]"
+            />
+          </div>
         </div>
       </div>
-      <div v-else 
-        class="d-flex flex-row justify-content-around align-items-center align-content-center flex-wrap"
+      <div
+        v-else
+        class="d-flex flex-row  justify-content-center flex-wrap"
       >
         <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByScore'].skillsOthers" :key="id">
-          <p>{{capitalize(skill.title)}}</p>
-          <apexcharts
-            type="radialBar"
-            height="300"
-            :options="chartOptions"
-            :series="[skill.note*10]"
-          />
+          <div v-if="skill.note>=noteMin">
+            <p>{{capitalize(skill.title)}}</p>
+            <apexcharts
+              type="radialBar"
+              height="300"
+              :options="chartOptions"
+              :series="[skill.note*10]"
+            />
+          </div>
         </div>
       </div>
     </client-only>
@@ -39,7 +45,8 @@ export default {
     Apexcharts: () => import("vue-apexcharts")
   },
   props: {
-    selected: { type: String, required: true }
+    selected: { type: String, required: true },
+    noteMin: { type: Number, required: true }
   },
   data: function() {
     return {
@@ -104,6 +111,7 @@ export default {
       title = title.split(" ");
 
       title.forEach(word => {
+        
         newStr += word[0].toUpperCase() + word.slice(1).toLowerCase() + " ";
       });
       return newStr;
@@ -112,27 +120,30 @@ export default {
 };
 </script>
 
-  <style >
-p {
+  <style>
+#others p {
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   text-align: center;
   z-index: 99;
   text-shadow: 0 0 1px black;
-  margin: 0;
+  max-width: 15rem;
+  margin: auto
 }
-
-#other {
+.skillsOthers{
+  max-width: 30rem;
+}
+#others {
   background-image: linear-gradient(
       rgba(0, 0, 0, 0.5),
       rgba(255, 255, 255, 0.2)
     ),
-    url("../assets/img/otherBackground.jpg");
+    url("../assets/img/formBackground.jpg");
   background-repeat: no-repeat;
 
   background-size: cover;
   background-position-y: center;
-  padding:  1rem ;
-  margin:2rem 0;  
+  padding: 1rem;
+  margin: 2rem 0;
 }
 </style>

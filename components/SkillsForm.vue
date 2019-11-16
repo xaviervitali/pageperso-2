@@ -3,30 +3,36 @@
     <client-only placeholder="Loading...">
       <div
         v-if="selected==='names'"
-        class="d-flex flex-row justify-content-around align-items-center align-content-center flex-wrap"
+        class="d-flex flex-row justify-content-center flex-wrap"
+
       >
         <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsForm" :key="id">
-          <p>{{capitalize(skill.title)}}</p>
+          <div v-if="skill.note>=noteMin">
+            <p>{{capitalize(skill.title)}}</p>
 
-          <apexcharts
-            type="radialBar"
-            height="300"
-            :options="chartOptions"
-            :series="[skill.note*10]"
-          />
+            <apexcharts
+              type="radialBar"
+              height="300"
+              :options="chartOptions"
+              :series="[skill.note*10]"
+            />
+          </div>
         </div>
       </div>
-      <div v-else 
-        class="d-flex flex-row justify-content-around align-items-center align-content-center flex-wrap"
+      <div
+        v-else
+        class="d-flex flex-row  justify-content-center flex-wrap"
       >
         <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByScore'].skillsForm" :key="id">
-          <p>{{capitalize(skill.title)}}</p>
-          <apexcharts
-            type="radialBar"
-            height="300"
-            :options="chartOptions"
-            :series="[skill.note*10]"
-          />
+          <div v-if="skill.note>=noteMin">
+            <p>{{capitalize(skill.title)}}</p>
+            <apexcharts
+              type="radialBar"
+              height="300"
+              :options="chartOptions"
+              :series="[skill.note*10]"
+            />
+          </div>
         </div>
       </div>
     </client-only>
@@ -39,7 +45,8 @@ export default {
     Apexcharts: () => import("vue-apexcharts")
   },
   props: {
-    selected: { type: String, required: true }
+    selected: { type: String, required: true },
+    noteMin: { type: Number, required: true }
   },
   data: function() {
     return {
@@ -113,7 +120,6 @@ export default {
 </script>
 
   <style>
-
 p {
   color: white;
   font-size: 1.5rem;
@@ -121,8 +127,9 @@ p {
   z-index: 99;
   text-shadow: 0 0 1px black;
   margin: 0;
+  max-width: 30rem;
 }
- 
+
 #form {
   background-image: linear-gradient(
       rgba(0, 0, 0, 0.5),
@@ -134,6 +141,6 @@ p {
   background-size: cover;
   background-position-y: center;
   padding: 1rem;
-  margin:  2rem 0;  
+  margin: 2rem 0;
 }
 </style>
