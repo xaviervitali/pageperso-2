@@ -52,8 +52,8 @@ export const state = () => ({
         logo: require("~/assets/img/fttx.png")
       },
       { title: "Beta-Test", note: 6, logo: require("~/assets/img/beta1.jpg") },
-      { title: "C.R.C.D",tooltip:"Conseiller Relation Client à Distance", note: 9.5 },
-      { title: "S.R.C.D",tooltip:"Superviseur Relation Client à Distance", note: 6 }
+      { title: "Conseiller Relation Client à Distance",tooltip:"Conseiller Relation Client à Distance", note: 9.5 },
+      { title: "Conseiller Relation Client à Distance",tooltip:"Superviseur Relation Client à Distance", note: 6 }
     ],
     skillsForm: [
       {

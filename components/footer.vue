@@ -1,21 +1,17 @@
 <template>
-  <div style="margin-bottom:5rem;">
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
-</head>
+  <div>
     <section class="fixed-bottom">
       <article>
-        <!-- <p>Linkedin</p> -->
-      <p  v-b-tooltip.hover.top="'Linkedin'">
-        <a href="https://github.com/xaviervitali/home">
-          <i  class="fab fa-linkedin-in"></i>
+        <p v-b-tooltip.hover.top="'Linkedin'">
+          <a href="https://github.com/xaviervitali/home">
+            <i class="fab fa-linkedin-in"></i>
           </a>
         </p>
       </article>
       <article>
         <p v-b-tooltip.hover.top="'Github'">
-      <a href="http://www.linkedin.com/in/xavier-vitali">
-          <i class="fab fa-github"></i>
+          <a href="http://www.linkedin.com/in/xavier-vitali">
+            <i class="fab fa-github"></i>
           </a>
         </p>
       </article>
@@ -28,13 +24,11 @@ export default {};
 </script>
 
 <style>
-
- 
 section {
-  background: linear-gradient(to top, #2fa9bc 33%,#f9f9f9 99%);
+  background: linear-gradient(to top, #2fa9bc 33%, #f9f9f9 99%);
 
   width: 100%;
-  padding: .5rem;
+  padding: 0.5rem;
   text-align: center;
   display: flex;
   justify-content: space-around;
@@ -43,6 +37,7 @@ section {
   margin-top: 5rem;
 }
 
-i{
-color:white}
+i {
+  color: white;
+}
 </style>

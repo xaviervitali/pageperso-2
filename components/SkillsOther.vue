@@ -138,7 +138,7 @@ export default {
       rgba(0, 0, 0, 0.5),
       rgba(255, 255, 255, 0.2)
     ),
-    url("../assets/img/formBackground.jpg");
+    url("../assets/img/otherBackground.jpg");
   background-repeat: no-repeat;
 
   background-size: cover;
