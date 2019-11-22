@@ -6,7 +6,7 @@
         class="d-flex flex-row justify-content-center flex-wrap"
 
       >
-        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsForm" :key="id">
+        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsForm" :key="id" class="skillOthers">
           <div v-if="skill.note>=noteMin">
             <p>{{capitalize(skill.title)}}</p>
 
@@ -23,7 +23,7 @@
         v-else
         class="d-flex flex-row  justify-content-center flex-wrap"
       >
-        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByScore'].skillsForm" :key="id">
+        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByScore'].skillsForm" :key="id" class="skillOthers">
           <div v-if="skill.note>=noteMin">
             <p>{{capitalize(skill.title)}}</p>
             <apexcharts
@@ -142,5 +142,12 @@ p {
   background-position-y: center;
   padding: 1rem;
   margin: 2rem 0;
+}
+.skillOthers {
+  max-width: 30rem;
+  display: flex;
+  height: 20rem;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 </style>

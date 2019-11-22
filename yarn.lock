@@ -5934,6 +5934,11 @@ readdirp@~3.2.0:
   dependencies:
     picomatch "^2.0.4"
 
+recaptcha@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/recaptcha/-/recaptcha-1.2.1.tgz#3d7a576a525aa19270d8b0ac90820ee7ca9eb8ae"
+  integrity sha1-PXpXalJaoZJw2LCskIIO58qeuK4=
+
 regenerate-unicode-properties@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/regenerate-unicode-properties/-/regenerate-unicode-properties-8.1.0.tgz#ef51e0f0ea4ad424b77bf7cb41f3e015c70a3f0e"
@@ -7125,6 +7130,11 @@ vue-radial-progress@^0.2.10:
   version "0.2.10"
   resolved "https://registry.yarnpkg.com/vue-radial-progress/-/vue-radial-progress-0.2.10.tgz#b4064c5d0750daf0ee6a9e323b3f79bd2bd6dedc"
   integrity sha1-tAZMXQdQ2vDuap4yOz95vSvW3tw=
+
+vue-recaptcha@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vue-recaptcha/-/vue-recaptcha-1.2.0.tgz#a30ab08b4c79326d2e3ab1c1e76c367e02e6eb35"
+  integrity sha512-zgt8bAmlHbLT2XY0diwA/UgGcbp1cOYXJ8za17WM1zlOC8EiO0mpGvYzXaR1aeU0gaiv1qLO6GOUwQVVAjgwMw==
 
 vue-router@~3.0.7:
   version "3.0.7"

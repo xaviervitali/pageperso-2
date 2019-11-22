@@ -1,14 +1,14 @@
 <template>
   <div id="others">
     <client-only placeholder="Loading...">
-      <div
-        v-if="selected==='names'"
-        class="d-flex flex-row  justify-content-center flex-wrap"
-
-      >
-        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsOthers" :key="id" class="skillOthers">
+      <div v-if="selected==='names'" class="d-flex flex-row justify-content-center flex-wrap">
+        <div
+          v-for="(skill,id) in  $store.getters['skills/sortSkillsByName'].skillsOthers"
+          :key="id"
+          class="skillOthers"
+        >
           <div v-if="skill.note>=noteMin">
-            <p  v-b-tooltip.hover.top="skill.tooltip">{{capitalize(skill.title)}}</p>
+            <p v-b-tooltip.hover.top="skill.tooltip">{{capitalize(skill.title)}}</p>
 
             <apexcharts
               type="radialBar"
@@ -19,11 +19,11 @@
           </div>
         </div>
       </div>
-      <div
-        v-else
-        class="d-flex flex-row  justify-content-center flex-wrap"
-      >
-        <div v-for="(skill,id) in  $store.getters['skills/sortSkillsByScore'].skillsOthers" :key="id">
+      <div v-else class="d-flex flex-row justify-content-center flex-wrap">
+        <div
+          v-for="(skill,id) in  $store.getters['skills/sortSkillsByScore'].skillsOthers"
+          :key="id"
+        >
           <div v-if="skill.note>=noteMin">
             <p>{{capitalize(skill.title)}}</p>
             <apexcharts
@@ -111,7 +111,6 @@ export default {
       title = title.split(" ");
 
       title.forEach(word => {
-        
         newStr += word[0].toUpperCase() + word.slice(1).toLowerCase() + " ";
       });
       return newStr;
@@ -128,10 +127,14 @@ export default {
   z-index: 99;
   text-shadow: 0 0 1px black;
   max-width: 15rem;
-  margin: auto
+  margin: auto;
 }
-.skillsOthers{
+.skillOthers {
   max-width: 30rem;
+  display: flex;
+  height: 20rem;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 #others {
   background-image: linear-gradient(

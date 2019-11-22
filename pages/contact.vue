@@ -2,19 +2,17 @@
   <div>
     <sidebar />
     <b-form
-      @submit="onSubmit"
       @reset="onReset"
       class="contactForm d-flex justify-content-center flex-column"
+      @submit="onSubmit"
     >
       <div
         class="tip"
       >Un Job ? Une remarque ? Ou un petit coucou ? N'hesitez pas à me les envoyer via le formulaire ci-dessous.</div>
       <div class="d-flex justify-content-center">
         <div class="d-flex justify-content-around align-items-center flex-column">
-   
-
-          <b-form-group >
-            <b-form-radio-group id="radio-group-2" v-model="form.selected" name="radio-sub-component">
+          <b-form-group>
+            <b-form-radio-group id="radio-group-2" v-model="form.genre" name="radio-sub-component">
               <b-form-radio value="M">Monsieur</b-form-radio>
               <b-form-radio value="Mme">Madame</b-form-radio>
             </b-form-radio-group>
@@ -45,7 +43,7 @@
           >
             <b-form-textarea
               id="textarea"
-              v-model="form.text"
+              v-model="form.msg"
               placeholder="Quelques mots ?"
               rows="4"
               max-rows="10"
@@ -54,12 +52,29 @@
           </b-form-group>
           <b-form-group class="d-flex flex-column justify-content-center flex-row-reverse">
             <b-button type="reset" variant="danger">Effacer les champs</b-button>
-            <b-button type="submit" variant="success">Envoyer votre message</b-button>
+            <vue-recaptcha
+              sitekey="6LcCn8MUAAAAACKjYDVGgWlDLVIIzhF1Z1AOU2bd"
+              ref="recaptcha"
+              @verify="onCaptchaVerified"
+              @expired="onCaptchaExpired"
+              size="invisible"
+            >
+              <b-button
+                type="submit"
+                variant="primary"
+                v-b-modal.modal-1
+                :disabled="emptyFields  "
+              >Envoyer votre message</b-button>
+            </vue-recaptcha>
           </b-form-group>
         </div>
       </div>
       <div class="d-flex justify-content-center">Les champs ayant une "*" sont obligatoires.</div>
     </b-form>
+    <b-modal id="modal-1" title="Messsage envoyé" okOnly>
+      <p class="my-4">Merci {{form.genre==="M"?"Monsieur":"Madame"}} {{form.name}},</p>
+      <p>je vous répondrez à l'adresse {{form.email}} dès que j'aurais pris connaissance de votre message.</p>
+    </b-modal>
     <foot />
   </div>
 </template>
@@ -67,26 +82,35 @@
 <script>
 import sidebar from "~/components/Sidebar.vue";
 import foot from "~/components/footer.vue";
+import VueRecaptcha from "vue-recaptcha";
 
 export default {
-  components: { sidebar, foot },
+  components: { sidebar, foot, VueRecaptcha },
   data() {
     return {
       form: {
         email: "",
         name: "",
-        text: "",
+        msg: "",
         firm: "",
-        selected:"M"
+        genre: "M"
       },
-
       show: true
     };
   },
   methods: {
-    onSubmit(evt) {
+    async onSubmit(evt) {
       evt.preventDefault();
-      alert(JSON.stringify(this.form));
+      await this.$axios.$get("form.php", {
+        params: {
+          email: this.form.email,
+          msg: this.form.msg,
+          firm: this.form.firm,
+          name: this.form.name,
+          genre: this.form.genre
+        }
+      });
+      this.onReset;
     },
     onReset(evt) {
       evt.preventDefault();
@@ -94,7 +118,7 @@ export default {
       this.form.email = "";
       this.form.name = "";
       this.form.firm = "";
-      this.form.text = "";
+      this.form.msg = "";
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
@@ -102,18 +126,13 @@ export default {
       });
     }
   },
-
-  async sendArticle() {
-    await this.$axios.$post("/articles", {
-      title: this.form.title,
-      description: this.form.description,
-      img_url: this.form.imgUrl,
-      url: this.form.url,
-      publisher_name: this.form.publisherName,
-      publisher_email: this.form.publisherEmail,
-      category: this.form.selectedCategory
-    });
-    this.$router.push("/articles/validate");
+  computed: {
+    emptyFields() {
+      for (let field in this.form) {
+        if (this.form[field] == "" &field!='firm') return true;
+      }
+      return false;
+    }
   }
 };
 </script>
@@ -144,5 +163,12 @@ textarea.form-control {
 }
 .btn:hover {
   opacity: 1;
+}
+
+.modal-content {
+  background: url("~assets/img/plane.jpg");
+  color: white;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>

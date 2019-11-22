@@ -16,7 +16,7 @@
           <b-nav-item href="/">A propos</b-nav-item>
           <b-nav-item href="/skills">Compétences</b-nav-item>
           <b-nav-item href="/portfolio">Portofolio</b-nav-item>
-          <b-nav-item href="/contact" >Contact</b-nav-item>
+          <b-nav-item href="/contact">Contact</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -38,7 +38,6 @@ h2 {
 }
 
 .fixed-top {
-  /* opacity: .9; */
   margin-bottom: 4rem;
   background: linear-gradient(to bottom, #2fa9bc 33%, #f9f9f9 99%);
   padding: 1rem;
@@ -47,29 +46,13 @@ h2 {
   overflow: hidden;
 }
 
-.navbar-dark .navbar-brand:hover,
-.navbar-dark:hover .navbar-nav:hover .nav-link:hover {
-  color: #5765ec;
-  transform: scale(1.1);
-}
 
-.navbar-dark:hover .navbar-brand:hover {
+
+.navbar-brand:hover {
   transform: rotate(180deg);
   transition: transform 1s;
   color: white;
   border: 0;
 }
-.navbar-dark .navbar-brand {
-  transform: scale(1.2);
-  transition: transform 1s;
-}
 
-@media screen and (max-width: 991px) {
-  .navbar-dark .navbar-brand:hover,
-  .navbar-dark:hover .navbar-nav:hover .nav-link:hover {
-    transform: scale(0);
-    border-bottom: 0;
-
-  }
-}
 </style>
