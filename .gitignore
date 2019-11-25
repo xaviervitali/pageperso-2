@@ -91,3 +91,5 @@ sw.*
 
 #php Files
 *.php
+
+.htaccess

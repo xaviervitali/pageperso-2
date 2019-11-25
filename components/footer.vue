@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <section class="fixed-bottom d-flex justify-content-around flex-row p-2">
+    <section class="fixed-bottom d-flex justify-content-around align-items-center flex-row p-2">
       <article>
         <p v-b-tooltip.hover.top="'Linkedin'">
           <a href="http://www.linkedin.com/in/xavier-vitali" target="_blank">
@@ -15,45 +15,51 @@
           </a>
         </p>
       </article>
-      <article
-        class="date"
-      >
-        <p>{{date}}</p>
-        <p>{{time}}</p>
+      <article class="weather" v-if="showWeather">
+        <p>
+          <i :class="['wi',  this.$store.state.weather.weather]"></i>
+        </p>
+        <p>{{this.$store.state.weather.temperature}} °C</p>
       </article>
     </section>
   </footer>
 </template>
-
 <script>
-import { async } from "q";
 export default {
   data() {
     return {
-      date: "",
-      time: "",
-      utc: 0
+      gettingLocation: false,
+      errorStr: null,
+      showWeather: false
     };
   },
+  created() {},
+
   mounted() {
-    this.getTime();
-  },
-  methods: {
-    async getTime() {
-      let datas = await this.$axios.get(
-        "/form.php"
+    if (
+      this.$store.state.weather.weather === "" &&
+      this.$store.state.weather.temperature === 0
+    ) {
+      if (!("geolocation" in navigator)) {
+        this.errorStr = "Geolocation is not available.";
+        return;
+      }
+
+      this.gettingLocation = true;
+      // get position
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          this.gettingLocation = false;
+          this.$store.dispatch("weather/getWeather",pos);
+          this.showWeather = true;
+        },
+        err => {
+          this.gettingLocation = false;
+          this.showWeather = false;
+
+          this.errorStr = err.message;
+        }
       );
-      this.utc = datas.data.dateUTC*1000;
-      this.setTime
-
-      window.setInterval(this.setTime, 1000);
-    },
-
-    setTime() {
-      let datasUTC = new Date(this.utc);
-      this.date = datasUTC.toLocaleDateString("fr-FR");
-      this.time = datasUTC.toLocaleTimeString("fr-Fr");
-      this.utc+=1000;
     }
   }
 };
@@ -80,11 +86,11 @@ footer a {
   margin: 0.1rem;
 }
 
-footer i {
+footer .fab {
   color: white;
   font-size: 2rem;
 }
-footer i:hover {
+footer .fab:hover {
   color: blue;
 }
 
@@ -95,4 +101,15 @@ footer section article {
   flex-direction: column;
   align-content: center;
 }
+footer {
+  margin-top: 4rem;
+}
+
+.weather {
+  font-size: 1.5rem;
+}
+
+/* .weather:hover {
+  transform: scale(1.5);
+} */
 </style>

@@ -182,6 +182,9 @@ img {
   }
   .smartphone {
     display: block;
+    margin-bottom: 2rem;
+
+
   }
   .apexcharts-legend.position-bottom.left,
   .apexcharts-legend.position-top.left,

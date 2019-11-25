@@ -17,9 +17,16 @@ export default {
       {
         rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css", integrity: "sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=", crossorigin: "anonymous"
 
-      },
-
+      }, {
+        rel: "stylesheet",
+        href:
+          "https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css"
+      }
     ]
+
+  },
+  env: {
+    apiid: process.env.apiid
   },
   script: ["https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit"],
   /*v
@@ -53,9 +60,9 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
- axios: {
-  baseURL: "/"
-},
+  axios: {
+    baseURL: "/"
+  },
   /*
   ** Build configuration
   */

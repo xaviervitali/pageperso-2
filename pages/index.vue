@@ -91,12 +91,21 @@ h2 {
   background-attachment: fixed;
   background-size: cover;
   background-position-y: center;
-  padding: 0 3rem;
+  padding: 1rem 3rem;
   overflow: hidden;
   text-shadow: 0 0 2px black;
   font-size: 1.2rem;
   margin: auto;
   color: black;
   text-shadow: 0 0 3px white;
+
 }
+
+@media screen and (max-width: 991px) {
+  #about{
+  background-position-x: right;
+
+
+}}
+
 </style>
