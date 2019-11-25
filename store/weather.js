@@ -2,6 +2,7 @@ export const state = () => ({
     apiKey: "8e602b9ea28ed4f9f8fc97a5f6d1105c",
     weather: "",
     temperature: 0,
+    city:"",
 
     weatherIcons: {
         Thunderstorm: "wi-day-thunderstorm",
@@ -28,6 +29,8 @@ export const mutations = {
     },
     SET_WEATHER(state, weather) {
         state.weather = weather
+    },    SET_CITY(state, city) {
+        state.city = city
     },
 
 
@@ -48,8 +51,10 @@ export const actions = {
             }
         );
         commit("SET_TEMPERATURE", Math.round(weatherResult.main.temp))
-        commit("SET_WEATHER", state.weatherIcons[weatherResult.weather[0].main]
-        )
+        commit("SET_WEATHER", state.weatherIcons[weatherResult.weather[0].main])
+        commit("SET_CITY", weatherResult.name)
+        
+        
 
     }
 }

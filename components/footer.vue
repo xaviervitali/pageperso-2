@@ -15,7 +15,7 @@
           </a>
         </p>
       </article>
-      <article class="weather" v-if="showWeather">
+      <article class="weather" v-if="showWeather"><p>{{this.$store.state.weather.city}}</p>
         <p>
           <i :class="['wi',  this.$store.state.weather.weather]"></i>
         </p>
