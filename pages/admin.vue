@@ -28,22 +28,30 @@
                 id="input-1"
                 v-model="password"
                 type="password"
-              required
+                required
                 placeholder="Mot de passe"
               ></b-form-input>
             </b-form-group>
             <b-button type="submit" variant="primary">M'identifier</b-button>
           </div>
         </div>
-      </b-form> 
+      </b-form>
     </div>
     <div v-else>
-    <table class="table table-striped  table-dark ">
-        <tr v-for="(msgs, id) in messages" :key=id  style="margin:20px">
-          <td  v-for="msg in msgs " :key=msg.id>{{msg.length>30?msg.slice(0,30)+"...":msg  }}</td><button class="btn btn-success" value="id">Afficher</button><button class="btn btn-danger" value="id">Supprimer</button>
-        </tr>
-
-      </table >
+      <b-table
+        :fields="fields"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        responsive="sm"
+        :items="messages"
+         sort-icon-left
+         fixed
+      ></b-table>
+      <div>
+        Sorting By:
+        <b>{{ sortBy }}</b>, Sort Direction:
+        <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
+      </div>
     </div>
     <foot />
   </div>
@@ -60,6 +68,8 @@ export default {
   },
   data() {
     return {
+      sortBy: "id",
+      sortDesc: true,
       accessDenied: false,
       password: "",
       name: "",
@@ -157,5 +167,9 @@ export default {
 .placard .title {
   background-color: #2fa9bc;
   font-size: 1.5rem;
+}
+.table td {
+  text-overflow: ellipsis;
+  height: 2rem !important;
 }
 </style>
