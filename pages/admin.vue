@@ -40,7 +40,7 @@
     <div v-else>
     <table class="table table-striped  table-dark ">
         <tr v-for="(msgs, id) in messages" :key=id  style="margin:20px">
-          <td  v-for="msg in msgs ">{{msg.length>30?msg.slice(0,30)+"...":msg  }}</td><button class="btn btn-success" value="id">Afficher</button><button class="btn btn-danger" value="id">Supprimer</button>
+          <td  v-for="msg in msgs " :key=msg.id>{{msg.length>30?msg.slice(0,30)+"...":msg  }}</td><button class="btn btn-success" value="id">Afficher</button><button class="btn btn-danger" value="id">Supprimer</button>
         </tr>
 
       </table >
