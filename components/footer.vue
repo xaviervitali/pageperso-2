@@ -106,10 +106,10 @@ footer {
 }
 
 .weather {
-  font-size: 1.5rem;
+  font-size: .8rem;
 }
 
-/* .weather:hover {
+.weather:hover {
   transform: scale(1.5);
-} */
+}
 </style>
