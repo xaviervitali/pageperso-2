@@ -14,7 +14,7 @@
         <div>
           <div class="para p-4 title">Bienvenue dans l'interface d'administration du site</div>
           <div class="para">
-            <div v-if="accessDenied" style="color:red">Nom d'Utilisateur ou mot de passe incorecte</div>
+            <div v-if="accessDenied" style="color:red">Nom d'Utilisateur ou mot de passe incorrecte</div>
             <b-form-group id="input-group-2" label="Identifiant :" label-for="input-2">
               <b-form-input id="input-2" v-model="name" required placeholder="Utilisateur"></b-form-input>
             </b-form-group>
@@ -22,7 +22,7 @@
               id="input-group-1"
               label="Mot de passe :"
               label-for="input-1"
-              description="Ce champs est sensible à la casse. "
+              description="Ce champs est sensible à la casse."
             >
               <b-form-input
                 id="input-1"
@@ -38,20 +38,34 @@
       </b-form>
     </div>
     <div v-else>
-      <b-table
-        :fields="fields"
-        :sort-by.sync="sortBy"
-        :sort-desc.sync="sortDesc"
-        responsive="sm"
-        :items="messages"
-         sort-icon-left
-         fixed
-      ></b-table>
-      <div>
-        Sorting By:
-        <b>{{ sortBy }}</b>, Sort Direction:
-        <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
-      </div>
+      <b-table striped hover responsive="lg" :fields="fields" stacked="lg" :items="messages">
+        <template v-slot:cell(actions)="row">
+          <b-button
+            size="sm"
+            @click="info(row.item, row.index, $event.target)"
+            class="mr-1"
+            variant="primary"
+          >Voir le message</b-button>
+        </template>
+        <template
+          v-slot:cell(msg)="data"
+        >{{ data.item.msg.length>80? data.item.msg.slice(0,80)+ " ...":data.item.msg}}</template>
+      </b-table>
+      <b-modal :id="infoModal.id" hide-footer :title="infoModal.title">
+        <p v-html="infoModal.content"></p>
+        <b-button
+          variant="danger"
+          class="col-4"
+      
+          @click="supprMsg(infoModal.itemId)"
+        >Supprimer le message {{infoModal.itemId}}</b-button>
+        <!-- <b-button
+            variant="success"
+            class="col-4"
+            :value="{}"
+            @click="this.sendMail(infoModal.name,infoModal.genre, infoModal.date, infoModal.email)"
+        >Repondre</b-button>-->
+      </b-modal>
     </div>
     <foot />
   </div>
@@ -68,47 +82,40 @@ export default {
   },
   data() {
     return {
-      sortBy: "id",
-      sortDesc: true,
-      accessDenied: false,
+      infoModal: {
+        id: "info-modal",
+        title: "",
+        content: ""
+      },
+
+      accessDenied: null,
       password: "",
       name: "",
-      messages: [
+      messages: [],
+      accessdenied: false,
+      fields: [
+        "id",
         {
-          id: "40",
-          date: "1574422644",
-          genre: "M",
-          name: "Xavier Vitali",
-          firm: "Xavier Vitali",
-          email: "xavier.vitali@gmail.com",
-          msg:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et fermentum dui. Ut orci quam, ornare sed lorem sed, hendrerit auctor dolor. Nulla viverra, nibh quis ultrices malesuada, ligula ipsum vulputate diam, aliquam egestas nibh ante vel dui. Sed in tellus interdum eros vulputate placerat sed non enim. Pellentesque eget justo porttitor urna dictum fermentum sit amet sed mauris. Praesent molestie vestibulum erat ac rhoncus. Aenean nunc risus, accumsan nec ipsum et, convallis sollicitudin dui. Proin dictum quam a semper malesuada. Etiam porta sit amet risus quis porta. Nulla facilisi. Cras at interdum ante. Ut gravida pharetra ligula vitae malesuada. Sed eget libero et arcu tempor tincidunt in ac lectus. Maecenas vitae felis enim. In in tellus consequat, condimentum eros vitae, lacinia risus. Sed vehicula sem sed risus volutpat elementum.\n\nNunc."
+          key: "date",
+          formatter: (value, key, item) => {
+            return new Date(value).toLocaleString("fr-Fr");
+          }
         },
-        {
-          id: "39",
-          date: "1574379225",
-          genre: "M",
-          name: "nom",
-          firm: "",
-          email: "xavier.vitali@gmail.com",
-          msg:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et fermentum dui. Ut orci quam, ornare sed lorem sed, hendrerit auctor dolor. Nulla viverra, nibh quis ultrices malesuada, iaculis varius, lorem nibh ullamcorper sapien"
-        },
-        {
-          id: "38",
-          date: "1574422644",
-          genre: "M",
-          name: "Xavier Vitali",
-          firm: "Xavier Vitali",
-          email: "xavier.vitali@gmail.com",
-          msg:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et fermentum dui. Ut orci quam, ornare sed lorem sed, hendrerit auctor dolor. Nulla viverra, nibh quis ultrices malesuada, ligula ipsum vulputate diam, aliquam egestas nibh ante vel dui. Sed in tellus interdum eros vulputate placerat sed non enim. Pellentesque eget justo porttitor urna dictum fermentum sit amet sed mauris. Praesent molestie vestibulum erat ac rhoncus. Aenean nunc risus, accumsan nec ipsum et, convallis sollicitudin dui. Proin dictum quam a semper malesuada. Etiam porta sit amet risus quis porta. Nulla facilisi. Cras at interdum ante. Ut gravida pharetra ligula vitae malesuada. Sed eget libero et arcu tempor tincidunt in ac lectus. Maecenas vitae felis enim. In in tellus consequat, condimentum eros vitae, lacinia risus. Sed vehicula sem sed risus volutpat elementum.\n\nNunc."
-        }
-      ],
-      accessdenied: false
+        "genre",
+        "name",
+        "firm",
+        "email",
+
+        { key: "msg" },
+        { key: "actions" }
+      ]
     };
   },
   methods: {
+    supprMsg(id) {
+
+      this.messages.slice(id, 1);
+    },
     onSubmit(evt) {
       evt.preventDefault();
     },
@@ -119,28 +126,57 @@ export default {
       this.form.name = "";
     },
     async filterMsg() {
-      let access = await this.$axios.$get("https://xaviervitali.fr/form.php", {
-        headers: {
-          "Access-Control-Allow-Origin": "localhost:3000 ",
-          "Access-Control-Allow-Headers": "X-Requested-With, Content-Type",
-          "Access-Control-Allow-Methods": "POST, GET"
-        },
-        params: {
-          // log: this.name,
-          // pwd: this.password
-          log: "Xavier13",
-          pwd: "Xavier13"
+      this.messages = await this.$axios.$get(
+        "http://5be41d5495e4340013f88ebe.mockapi.io/messages",
+        {
+          params: {
+            // log: this.name,
+            // pwd: this.password
+            log: "Xavier13",
+            pwd: "Xavier13"
+          }
         }
-      });
-      if (access.accessdenied) {
-        this.accessDenied = true;
-        this.messages = access.messages;
-        this.onReset;
-      } else {
-        this.accessDenied = false;
-      }
-    }
+      );
+
+      // if (access.accessdenied) {
+      //   this.accessDenied = true;
+      //   this.messages = access.messages;
+      //   this.onReset;
+      // } else {
+      this.accessDenied = false;
+      // }
+    },
+    info(item, index, button) {
+      this.infoModal.title = `<p>Nom : ${item.genre + " " + item.name}</p> `;
+
+      this.infoModal.content = `${
+        item.firm != "" ? "<p>Société : " + item.firm + "</p>" : ""
+      }<p>${new Date(item.date).toLocaleString("fr-FR")}<p> 
+       <p>Message :</p><p >${item.msg}</p>`;
+      // JSON.stringify(item, null, 2)
+      this.infoModal.itemId = index;
+      this.infoModal.email = item.email;
+      this.infoModal.nom = item.name;
+      this.infoModal.date = item.date;
+      this.infoModal.genre = item.genre;
+      this.$root.$emit("bv::show::modal", this.infoModal.id, button);
+    },
   },
+  // },
+  // computed:{
+  //   sendMail(name, genre, date, email) {
+  //     window.open(
+  //       "mailto:" +
+  //         email +
+  //         "?subject=message laissé le " +
+  //         date.toLocaleString('fr-FR') +
+  //         " sur xaviervitali.fr&body=Bonjour " +
+  //         genre +
+  //         " name,"
+  //     );
+
+  // }
+  // },
 
   watch: {
     name: function(evt) {
@@ -168,8 +204,9 @@ export default {
   background-color: #2fa9bc;
   font-size: 1.5rem;
 }
-.table td {
-  text-overflow: ellipsis;
-  height: 2rem !important;
+
+.modal-body {
+  overflow: scroll;
+  max-height: 30rem;
 }
 </style>
