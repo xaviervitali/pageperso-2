@@ -132,8 +132,7 @@ export default {
           params: {
             // log: this.name,
             // pwd: this.password
-            log: "Xavier13",
-            pwd: "Xavier13"
+
           }
         }
       );
